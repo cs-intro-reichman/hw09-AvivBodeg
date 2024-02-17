@@ -37,13 +37,11 @@ public class List {
     
     /** GIVE Textual representation of this list. */
     public String toString() {
-        Node current  = first;
-        StringBuilder str = new StringBuilder();
-        while (current != null){
-            str.append(current).append(" ");
-            current = current.next;
+        StringBuilder builder = new StringBuilder("(");
+        for (int i = 0; i < size; i++) {
+            builder.append(this.listIterator(i).current).append(" ");
         }
-        return str.toString();
+        return builder.substring(0,builder.length() - 1) + ")";
     }
 
     /** Returns the index of the first CharData object in this list
@@ -102,16 +100,14 @@ public class List {
      *  If the index is negative or is greater than the size of this list, 
      *  throws an IndexOutOfBoundsException. */
     public CharData get(int index) {
-        try {
-            Node current = first;
-            for (int i = 0; i < index; i++) {
-                current = current.next;
-            }
-            return current.cp;
-            throw new IndexOutOfBoundsException("index out of bounds");
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println(e.getMessage());
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
         }
+        Node current = first;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        return current.cp;
     }
 
     /** Returns an array of CharData objects, containing all the CharData objects in this list. */
