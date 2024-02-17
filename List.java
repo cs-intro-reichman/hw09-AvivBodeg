@@ -29,17 +29,17 @@ public class List {
 
     /** GIVE Adds a CharData object with the given character to the beginning of this list. */
     public void addFirst(char chr) {
-        CharData data = new CharData(chr);
-        Node newNode = new Node(data, first);
+        Node newNode = new Node(new CharData(chr));
+        newNode.next = first;
         first = newNode;
         size++;
     }
     
     /** GIVE Textual representation of this list. */
     public String toString() {
-        StringBuilder builder = new StringBuilder("(");
+        String builder = "(";
         for (int i = 0; i < size; i++) {
-            builder.append(this.listIterator(i).current).append(" ");
+            builder += this.listIterator(i).current + " ";
         }
         return builder.substring(0,builder.length() - 1) + ")";
     }
