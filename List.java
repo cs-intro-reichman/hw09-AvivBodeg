@@ -10,7 +10,7 @@ public class List {
 
     // The number of elements in this list
     private int size;
-	
+
     /** Constructs an empty list. */
     public List() {
         first = null;
@@ -34,7 +34,7 @@ public class List {
         first = newNode;
         size++;
     }
-    
+
     /** GIVE Textual representation of this list. */
     public String toString() {
         String builder = "(";
@@ -54,7 +54,7 @@ public class List {
         Node current = first;
         int index = 0;
         while (current != null){
-            if (current.cp.chr == chr) {
+            if (current.cp.equals(chr)) {
                 return index;
             }
             current = current.next;
@@ -96,8 +96,8 @@ public class List {
         return true;
     }
 
-    /** Returns the CharData object at the specified index in this list. 
-     *  If the index is negative or is greater than the size of this list, 
+    /** Returns the CharData object at the specified index in this list.
+     *  If the index is negative or is greater than the size of this list,
      *  throws an IndexOutOfBoundsException. */
     public CharData get(int index) {
         if (index < 0 || index >= size) {
@@ -124,16 +124,16 @@ public class List {
 
     /** Returns an iterator over the elements in this list, starting at the given index. */
     public ListIterator listIterator(int index) {
-	    // If the list is empty, there is nothing to iterate   
-	    if (size == 0) return null;
-	    // Gets the element in position index of this list
-	    Node current = first;
-	    int i = 0;
+        // If the list is empty, there is nothing to iterate
+        if (size == 0) return null;
+        // Gets the element in position index of this list
+        Node current = first;
+        int i = 0;
         while (i < index) {
             current = current.next;
             i++;
         }
         // Returns an iterator that starts in that element
-	    return new ListIterator(current);
+        return new ListIterator(current);
     }
 }
