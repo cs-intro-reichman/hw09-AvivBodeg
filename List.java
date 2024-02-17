@@ -19,7 +19,7 @@ public class List {
 
     /** Returns the number of elements in this list. */
     public int getSize() {
- 	      return size;
+        return size;
     }
 
     /** Returns the first element in the list */
@@ -48,12 +48,9 @@ public class List {
      *  that has the same chr value as the given char,
      *  or -1 if there is no such object in this list. */
     public int indexOf(char chr) {
-        if (size == 0){
-            return -1;
-        }
         Node current = first;
         int index = 0;
-        while (current != null){
+        while (current != null) {
             if (current.cp.equals(chr)) {
                 return index;
             }
@@ -67,10 +64,11 @@ public class List {
      *  increments its counter. Otherwise, adds a new CharData object with the
      *  given chr to the beginning of this list. */
     public void update(char chr) {
-        if (indexOf(chr) == -1) {
-            addFirst(chr);
+        int index = indexOf(chr);
+        if (index >= 0) {
+            this.get(index).count++;
         } else {
-            get(indexOf(chr)).count++;
+            addFirst(chr);
         }
     }
 
@@ -78,14 +76,16 @@ public class List {
      *  in this list, removes this CharData object from the list and returns
      *  true. Otherwise, returns false. */
     public boolean remove(char chr) {
+        // Finds the node to remove, using two pointers;
+        // prev is one step behind current
         Node prev = null;
         Node current = first;
-        while (current != null && current.cp.chr != chr){
+        while (current != null && !current.cp.equals(chr)) {
             prev = current;
             current = current.next;
         }
         if (current == null) {
-            return false;
+            return false; // not found
         }
         if (prev == null) {
             first = first.next;
@@ -112,12 +112,12 @@ public class List {
 
     /** Returns an array of CharData objects, containing all the CharData objects in this list. */
     public CharData[] toArray() {
-	    CharData[] arr = new CharData[size];
-	    Node current = first;
-	    int i = 0;
+        CharData[] arr = new CharData[size];
+        Node current = first;
+        int i = 0;
         while (current != null) {
-    	    arr[i++]  = current.cp;
-    	    current = current.next;
+            arr[i++]  = current.cp;
+            current = current.next;
         }
         return arr;
     }
@@ -136,4 +136,5 @@ public class List {
         // Returns an iterator that starts in that element
         return new ListIterator(current);
     }
+
 }
