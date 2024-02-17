@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.ListIterator;
 import java.util.Random;
 
 public class LanguageModel {
@@ -39,12 +40,30 @@ public class LanguageModel {
     // Computes and sets the probabilities (p and cp fields) of all the
 	// characters in the given list. */
 	public void calculateProbabilities(List probs) {				
-		// Your code goes here
+		int totalChars = 0;
+        for (int i = 0; i < probs.getSize(); i++) {
+            totalChars += probs.get(i).count;
+        }
+        double cp = 0;
+        for (int i = 0; i < probs.getSize(); i++) {
+            CharData data = probs.get(i);
+            data.p = (double) data.count /totalChars;
+            cp += data.p;
+            data.cp = cp;
+        }
 	}
 
     // Returns a random character from the given probabilities list.
 	public char getRandomChar(List probs) {
-		// Your code goes here
+        double rnd = randomGenerator.nextDouble();
+        ListIterator iterator = probs.listIterator(0);
+        while (iterator.hasNext()) {
+            CharData curreCharData = iterator.next();
+            if (rnd < curreCharData.cp) {
+                return curreCharData.chr;
+            }
+        }
+        return probs.get(probs.getSize()-1).chr;
 	}
 
     /**
