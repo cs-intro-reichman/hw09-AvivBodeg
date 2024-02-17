@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.ListIterator;
 import java.util.Random;
 
 public class LanguageModel {
@@ -34,31 +33,6 @@ public class LanguageModel {
 
     /** Builds a language model from the text in the given file (the corpus). */
 	public void train(String fileName) {
-        In in = new In(fileName);
-        StringBuilder window = new StringBuilder();
-
-        for (int i= 0; i < windowLength && !in.isEmpty(); i++) {
-            char c = in.readChar();
-            window.append(c);
-        }
-        while (!in.isEmpty()) {
-            char nextChar = in.readChar();
-            if (window.length() < windowLength) {
-                window.append(nextChar);
-            } else {
-                String currentWindow = window.toString();
-                List probs = CharDataMap.getOrDefault(currentWindow, new List());
-                probs.update(nextChar);
-                CharDataMap.put(currentWindow, probs);
-
-                window.deleteCharAt(0);
-                window.append(nextChar);
-            }
-        }
-
-        for (List list : CharDataMap.values()) {
-            calculateProbabilities(list);
-        }
 	}
 
     // Computes and sets the probabilities (p and cp fields) of all the
