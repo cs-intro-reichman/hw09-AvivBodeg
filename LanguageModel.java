@@ -99,12 +99,29 @@ public class LanguageModel {
 	 * Generates a random text, based on the probabilities that were learned during training. 
 	 * @param initialText - text to start with. If initialText's last substring of size numberOfLetters
 	 * doesn't appear as a key in Map, we generate no text and return only the initial text. 
-	 * @param numberOfLetters - the size of text to generate
+	 * @param textLength - the size of text to generate
 	 * @return the generated text
 	 */
 	public String generate(String initialText, int textLength) {
-		// Your code goes here
-        return "";
+        if (initialText.length() < windowLength) {
+            return initialText;
+        }
+
+        String window = initialText.substring(initialText.length() - windowLength);
+        StringBuilder generatedText = new StringBuilder(window);
+
+        for (int i = 0; i < textLength; i++) {
+            List probs = CharDataMap.get(window);
+            if (probs != null) {
+                char newChar = getRandomChar(probs);
+                generatedText.append(newChar);
+                window = generatedText.substring(generatedText.length() - windowLength);
+            } else {
+                return generatedText.toString();
+            }
+        }
+
+        return generatedText.toString();
 	}
 
     /** Returns a string representing the map of this language model. */
